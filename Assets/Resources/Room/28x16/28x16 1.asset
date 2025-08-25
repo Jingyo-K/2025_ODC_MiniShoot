@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307ca74eb136f174c9f3696ca3da55c8, type: 3}
+  m_Name: 28x16 1
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  prefab: {fileID: 2105103484960886780, guid: 991cb395717d62e4b8bb9a44b60b3412, type: 3}
+  verticalHallPrefab: {fileID: 2105103484960886780, guid: 71ca200f1bbe21145a84fa71c420cdeb, type: 3}
+  horizontalHallPrefab: {fileID: 2105103484960886780, guid: 60d2089ca25497549959662f07b833a9, type: 3}
+  width: 28
+  height: 16
+  openDoor: 0
+  NorthDoorPrefab: {fileID: 0}
+  SouthDoorPrefab: {fileID: 0}
+  EastDoorPrefab: {fileID: 0}
+  WestDoorPrefab: {fileID: 0}

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945d91bfa1724934d8c356823c4f3afb, type: 3}
+  m_Name: BasicWeapon
+  m_EditorClassIdentifier: 
+  atkMultiplier: 1
+  fireRateMultiplier: 1
+  rangeMultiplier: 1
+  bulletSpeedMultiplier: 2
+  fireType: 0
+  bulletType: 0
+  isHoming: 0
+  homingRange: 0
+  homingTurnSpeed: 0
+  bulletPrefab: {fileID: 776921052958840272, guid: f7e9377e26862fb40882916ce346ad83, type: 3}
+  weaponIcon: {fileID: 2133603790, guid: 066b1b547f2564543aacaffc9e43d0a2, type: 3}
+  weaponName: 
+  weaponPrice: 0
+  weaponDescription: 

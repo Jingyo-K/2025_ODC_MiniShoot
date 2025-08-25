@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558874338bf6a8f48bfcb2f2f8d0a63c, type: 3}
+  m_Name: MoveSpeed
+  m_EditorClassIdentifier: 
+  itemName: "\uD130\uBCF4 \uCD94\uC9C4\uAE30"
+  itemIcon: {fileID: 21300000, guid: 8cd913a5328e4b948a3134e1d87abf16, type: 3}
+  itemPrice: 15
+  itemDescription: "\uC774\uB3D9\uC18D\uB3C4 +1"
+  MaxHp: 0
+  CurrentHp: 0
+  Atk: 0
+  FireInterval: 0
+  BulletSpeed: 0
+  Range: 0
+  MoveSpeed: 1
+  CritChance: 0

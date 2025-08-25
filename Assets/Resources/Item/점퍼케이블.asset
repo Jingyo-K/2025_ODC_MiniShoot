@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558874338bf6a8f48bfcb2f2f8d0a63c, type: 3}
+  m_Name: "\uC810\uD37C\uCF00\uC774\uBE14"
+  m_EditorClassIdentifier: 
+  itemName: "\uC810\uD37C\uCF00\uC774\uBE14"
+  itemIcon: {fileID: 21300000, guid: 0d0743b9ed7c7b3429d7387d38f8409c, type: 3}
+  itemPrice: 25
+  itemDescription: "\uACF5\uACA9\uB825 +3 <br>\uCD08\uB2F9 \uACF5\uACA9\uC18D\uB3C4
+    -0.2 "
+  MaxHp: 0
+  CurrentHp: 0
+  Atk: 3
+  FireInterval: -0.2
+  BulletSpeed: 0
+  Range: 0
+  MoveSpeed: 0
+  CritChance: 0

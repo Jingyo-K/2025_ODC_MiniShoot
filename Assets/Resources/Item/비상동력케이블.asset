@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558874338bf6a8f48bfcb2f2f8d0a63c, type: 3}
+  m_Name: "\uBE44\uC0C1\uB3D9\uB825\uCF00\uC774\uBE14"
+  m_EditorClassIdentifier: 
+  itemName: "\uBE44\uC0C1 \uB3D9\uB825 \uCF00\uC774\uBE14"
+  itemIcon: {fileID: 21300000, guid: 0e241205e79695343a07c244a814af2c, type: 3}
+  itemPrice: 35
+  itemDescription: "\uCCB4\uB825 + 50<br> \uACF5\uACA9\uB825 - 4 "
+  MaxHp: 50
+  CurrentHp: 50
+  Atk: -4
+  FireInterval: 0
+  BulletSpeed: 0
+  Range: 0
+  MoveSpeed: 0
+  CritChance: 0
