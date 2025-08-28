@@ -1,111 +1,91 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
+
+
+/// <summary>
+/// 플레이어의 발사 관련 기능을 처리하는 클래스입니다.
+/// 발사 방향은 PlayerModel의 방향에 따른 채 발사만을 담당합니다.
+/// </summary>
+[RequireComponent(typeof(PlayerStat))]
 public class PlayerFire : MonoBehaviour
 {
-    public WeaponData currentWeaponData; // 인스펙터에서 SO 할당
+    [Header("Weapon")]
+    public WeaponData currentWeaponData;
+    [SerializeField] private Transform muzzle;
 
+    [Header("Refs")]
+    [SerializeField] private PlayerInputHandler inputHandler;
+    private PlayerStat playerStat;
     private Weapon runtimeWeapon;
-    private PlayerStat playerstat;
-    private PlayerStateController stateController;
-    private Coroutine fireCoroutine;
-    private Vector2 fireDirection = Vector2.right;
-    private bool isCooldown = false;
-    private bool isFirstShot = true; // 첫 발사 여부
-    private float lastFireTime = 0f;
-    void OnEnable()
-    {
-        GetComponent<PlayerStat>().OnStatChanged += UpdateWeaponStats;
+    private Coroutine fireCo;
 
+    private void Awake()
+    {
+        playerStat = GetComponent<PlayerStat>();
+        runtimeWeapon = gameObject.AddComponent<Weapon>();
     }
 
-    private void UpdateWeaponStats(PlayerStat stat)
+    private void OnEnable()
     {
-        // Update weapon stats based on player stats
-        if (runtimeWeapon != null)
+        runtimeWeapon.Init(playerStat, currentWeaponData);
+        if (inputHandler == null) inputHandler = FindObjectOfType<PlayerInputHandler>();
+        if (inputHandler)
         {
-            runtimeWeapon.Init(stat, currentWeaponData);
+            inputHandler.OnFirePressed  += StartFire;
+            inputHandler.OnFireReleased += StopFire;
         }
+
+        playerStat.OnStatChanged += OnStatChanged;
     }
 
     private void OnDisable()
     {
-        GetComponent<PlayerStat>().OnStatChanged -= UpdateWeaponStats;
-    }
-
-    void Start()
-    {
-        stateController = GetComponent<PlayerStateController>();
-        playerstat = GetComponent<PlayerStat>();
-
-        // 무기 프리팹이 아니라, 런타임 Weapon 컴포넌트 할당 (혹은 Instantiate로 생성)
-        runtimeWeapon = gameObject.AddComponent<Weapon>();
-        runtimeWeapon.Init(playerstat, currentWeaponData);
-    }
-
-    void Update()
-    {
-        if (stateController.CurrentAttackState == AttackState.Fire)
+        if (inputHandler)
         {
-            if (fireCoroutine == null)
-            {
-                fireCoroutine = StartCoroutine(FireCoroutine());
-            }
+            inputHandler.OnFirePressed  -= StartFire;
+            inputHandler.OnFireReleased -= StopFire;
         }
-        else
-        {
-            if (fireCoroutine != null)
-            {
-                StopCoroutine(fireCoroutine);
-                fireCoroutine = null;
-                isCooldown = false;
-            }
-        }
+
+        playerStat.OnStatChanged -= OnStatChanged;
+        StopFire();
     }
 
-    public void SetFireDirection(Vector2 dir)
+    private void OnStatChanged(PlayerStat s)
     {
-        if (dir.sqrMagnitude > 0.01f)
-            fireDirection = dir.normalized;
+        runtimeWeapon.Init(playerStat, currentWeaponData);
     }
 
-    private IEnumerator FireCoroutine()
+    private void StartFire(Vector2 _)
     {
-        float fireInterval = 1 / (playerstat.stat.FireInterval * currentWeaponData.fireRateMultiplier);
-        Debug.Log($"PlayerStat: " + playerstat.stat + $"Fire Interval: {fireInterval}");
+        if (!muzzle) { Debug.LogWarning("[PlayerFire] muzzle 참조가 필요합니다."); return; }
+        if (fireCo == null) fireCo = StartCoroutine(FireLoop());
+    }
+
+    private void StopFire()
+    {
+        if (fireCo != null) { StopCoroutine(fireCo); fireCo = null; }
+    }
+
+    private IEnumerator FireLoop()
+    {
+        if (playerStat == null || currentWeaponData == null) yield break;
+
+        float rate = playerStat.stat.FireInterval * currentWeaponData.fireRateMultiplier;
+        if (rate <= 0f) rate = 1f;
+        float interval = 1f / rate;
+
         while (true)
         {
-            if (!isCooldown)
-            {
-                // 발사 처리
-                runtimeWeapon.Fire(fireDirection);
-
-                // 발사 후 시간 기록
-
-                // 쿨타임 활성화
-                isCooldown = true;
-
-                // 쿨타임 대기
-                yield return new WaitForSeconds(fireInterval);
-
-                // 쿨타임 해제
-                isCooldown = false;
-            }
-            else
-            {
-                // 발사 간격 대기
-                yield return null;
-            }
+            Vector2 dir = muzzle.up;            // 방향은 모델 기준
+            runtimeWeapon.Fire(dir);
+            yield return new WaitForSeconds(interval);
         }
     }
 
-    // 무기 교체 함수 (예: 아이템 획득, 인벤토리 스왑)
-    public void EquipWeapon(WeaponData newWeaponData)
+    public void EquipWeapon(WeaponData newData)
     {
-        currentWeaponData = newWeaponData;
-        runtimeWeapon.Init(playerstat, currentWeaponData);
+        currentWeaponData = newData;
+        runtimeWeapon.Init(playerStat, currentWeaponData);
     }
 }
-

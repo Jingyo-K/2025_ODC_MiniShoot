@@ -118,9 +118,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb374efaa0b3e7542bd6919082cce73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAheadDistance: 1.5
+  facingSource: {fileID: 6264291433595750952}
+  inputHandler: {fileID: 4830521973745292276}
+  lookAheadDistance: 2
   saveLookAheadDistance: 0
-  lookDirection: {x: 0, y: 0}
+  lookSmooth: 0.15
+  minSpeed: 0.2
+  maxSpeed: 2
+  distScale: 2
+  lookDirection: {x: 0, y: 1}
 --- !u!1 &2778308778793360344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1085,10 @@ GameObject:
   - component: {fileID: 4685808493783240882}
   - component: {fileID: 1088840492780629713}
   - component: {fileID: 4509003914681259147}
+  - component: {fileID: 4830521973745292276}
   - component: {fileID: 6676794358762190586}
+  - component: {fileID: 2598133058805707472}
+  - component: {fileID: 744442591959650262}
   - component: {fileID: 4573217069804214168}
   - component: {fileID: 8626635399979332314}
   - component: {fileID: 2128030065964471869}
@@ -1165,8 +1174,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6676794358762190586}
-        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
+      - m_Target: {fileID: 4830521973745292276}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -1181,9 +1190,9 @@ MonoBehaviour:
     m_ActionName: PlayerMove/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6676794358762190586}
-        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
-        m_MethodName: OnFire
+      - m_Target: {fileID: 4830521973745292276}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnFireMouse
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1197,8 +1206,8 @@ MonoBehaviour:
     m_ActionName: PlayerMove/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6676794358762190586}
-        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
+      - m_Target: {fileID: 4830521973745292276}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnFireG
         m_Mode: 0
         m_Arguments:
@@ -1229,8 +1238,8 @@ MonoBehaviour:
     m_ActionName: PlayerMove/Exit[/XInputControllerWindows/buttonEast,/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6676794358762190586}
-        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
+      - m_Target: {fileID: 4830521973745292276}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
         m_MethodName: OnDash
         m_Mode: 0
         m_Arguments:
@@ -1281,6 +1290,22 @@ MonoBehaviour:
   sRange: 10
   sMoveSpeed: 5
   sCritChance: 0.1
+--- !u!114 &4830521973745292276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688435771225906042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 360a852a224e3fa46b58624f503c1661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 5044310732675034102}
+  worldCamera: {fileID: 0}
+  stateController: {fileID: 1088840492780629713}
+  rightStickDeadzone: 0.3
 --- !u!114 &6676794358762190586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1293,21 +1318,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edec3db02e8818a48be0ef7d7d83f821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHandler: {fileID: 4830521973745292276}
   playerStat: {fileID: 4509003914681259147}
-  playerModel: {fileID: 7730504232795401781}
-  playerSpeed: 5
-  playerInertia: 0.1
+  playerModel: {fileID: 6264291433595750952}
+  baseSpeed: 5
+  inertia: 0.1
   stopThreshold: 0.5
-  rotateSpeed: 720
-  dashGaugeImage: {fileID: 4195906451582927894}
-  playerInput: {fileID: 0}
-  isLooking: 0
-  cameraLookAhead: {fileID: 6298358520954806776}
-  aimAssistRadius: 1.5
-  aimAssistrange: 10
-  enemyLayerMask:
+  rotateSpeedDegPerSec: 360
+--- !u!114 &2598133058805707472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688435771225906042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6018ac5443cccb042b0fdc82815fae63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 4830521973745292276}
+  playerMove: {fileID: 6676794358762190586}
+  playerModel: {fileID: 6264291433595750952}
+  rb2D: {fileID: 5299744885973800933}
+  aimRotateSpeedDegPerSec: 720
+  aimHoldSeconds: 0.15
+  enableAimAssist: 1
+  assistRadius: 5
+  assistRange: 10
+  enemyMask:
     serializedVersion: 2
     m_Bits: 128
+  snapAngleDeg: 15
+--- !u!114 &744442591959650262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688435771225906042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538e7093f8e3ec54fbdb5603060065ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 4830521973745292276}
+  playerMove: {fileID: 6676794358762190586}
+  dashGaugeImage: {fileID: 4195906451582927894}
+  dashSpeedMultiplier: 2
+  maxDashDuration: 2
+  regenPerSecond: 0.6
+  cooldownSeconds: 1
+  flickerOnCooldown: 1
 --- !u!114 &4573217069804214168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,6 +1383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponData: {fileID: 11400000, guid: d5b755b7434509747ab2dc9241d7aaee, type: 2}
+  muzzle: {fileID: 6264291433595750952}
+  inputHandler: {fileID: 4830521973745292276}
 --- !u!114 &8626635399979332314
 MonoBehaviour:
   m_ObjectHideFlags: 0

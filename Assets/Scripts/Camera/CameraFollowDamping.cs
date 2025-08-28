@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class CameraFollowDamping : MonoBehaviour
-{
+{/*
     [SerializeField] private Transform target;          // 플레이어 Transform
     [SerializeField] private float followSpeed = 10f;   // 카메라 댐핑 속도
     [SerializeField] private float lookAheadDistance = 2.5f; // 카메라가 앞서갈 거리
@@ -28,6 +28,7 @@ public class CameraFollowDamping : MonoBehaviour
         if (dir.sqrMagnitude > 0.01f)
             lookDirection = dir.normalized;
     }
+    */
 }
 
 // --- Vector3의 z값 고정 유틸 ---
