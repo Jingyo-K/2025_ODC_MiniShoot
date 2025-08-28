@@ -54,7 +54,7 @@ public class RoomGen : MonoBehaviour
             }
         }
     }
-    private void PlaceDoorOrHall(RoomNode node, GameObject room, DirectionType direction)
+    /*private void PlaceDoorOrHall(RoomNode node, GameObject room, DirectionType direction)
     {
         Vector3 basePosition = node.RealPosition;
         Vector3 offset = Vector3.zero;
@@ -89,7 +89,7 @@ public class RoomGen : MonoBehaviour
 
         Vector3 spawnPosition = basePosition + offset;
         Instantiate(selectedPrefab, spawnPosition, Quaternion.identity).transform.parent = room.transform;
-    }
+    }*/
     private void SetNeighborPosition(RoomNode node)
     {
         foreach (RoomNode neighbor in node.Neighbors)

@@ -7,8 +7,7 @@ public class RoomObject : ScriptableObject
 {
     public Vector2Int position;
     public GameObject prefab;
-    public GameObject verticalHallPrefab;
-    public GameObject horizontalHallPrefab;
+
     public int width;
     public int height;
     public int openDoor; // 열려있는 문 비트마스크
