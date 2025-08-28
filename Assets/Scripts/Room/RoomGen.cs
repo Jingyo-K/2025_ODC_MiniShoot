@@ -37,14 +37,6 @@ public class RoomGen : MonoBehaviour
             room.GetComponent<RoomManage>().SetBitmask(DoorFlag);
             room.GetComponent<RoomManage>().OpenDoor();
 
-            /*if (DoorFlag != 0)
-            {
-                PlaceDoorOrHall(node, room, DirectionType.North);
-                PlaceDoorOrHall(node, room, DirectionType.East);
-                PlaceDoorOrHall(node, room, DirectionType.South);
-                PlaceDoorOrHall(node, room, DirectionType.West);
-            }
-            */
             if (node.Tag == RoomType.Exit)
             {
                 GameObject exitZone = Instantiate(exitZonePrefab, new Vector3(node.RealPosition.x, node.RealPosition.y, 0), Quaternion.identity);
@@ -54,42 +46,7 @@ public class RoomGen : MonoBehaviour
             }
         }
     }
-    /*private void PlaceDoorOrHall(RoomNode node, GameObject room, DirectionType direction)
-    {
-        Vector3 basePosition = node.RealPosition;
-        Vector3 offset = Vector3.zero;
-        GameObject selectedPrefab = null;
 
-        float halfWidth = node.RoomObject.width / 2f;
-        float halfHeight = node.RoomObject.height / 2f;
-        float hallWidth = (32f - node.RoomObject.width) / 2f;
-        float hallHeight = (32f - node.RoomObject.height) / 2f;
-
-        bool hasDoor = node.HasDoor(direction);
-
-        switch (direction)
-        {
-            case DirectionType.North:
-                offset = new Vector3(0, halfHeight + (hasDoor ? -0.5f : hallHeight / 2), 0);
-                selectedPrefab = hasDoor ? verticalDoorPrefab : node.RoomObject.verticalHallPrefab;
-                break;
-            case DirectionType.East:
-                offset = new Vector3(halfWidth + (hasDoor ? -0.5f : hallWidth / 2), 0, 0);
-                selectedPrefab = hasDoor ? horizontalDoorPrefab : node.RoomObject.horizontalHallPrefab;
-                break;
-            case DirectionType.South:
-                offset = new Vector3(0, -halfHeight + (hasDoor ? 0.5f : -hallHeight / 2), 0);
-                selectedPrefab = hasDoor ? verticalDoorPrefab : node.RoomObject.verticalHallPrefab;
-                break;
-            case DirectionType.West:
-                offset = new Vector3(-halfWidth + (hasDoor ? 0.5f : -hallWidth / 2), 0, 0);
-                selectedPrefab = hasDoor ? horizontalDoorPrefab : node.RoomObject.horizontalHallPrefab;
-                break;
-        }
-
-        Vector3 spawnPosition = basePosition + offset;
-        Instantiate(selectedPrefab, spawnPosition, Quaternion.identity).transform.parent = room.transform;
-    }*/
     private void SetNeighborPosition(RoomNode node)
     {
         foreach (RoomNode neighbor in node.Neighbors)
